@@ -30,7 +30,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - ELASTICSEARCH_HOST=http://elasticsearch:9200    
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+      - ELASTICSEARCH_SCHEME=http
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}  
     depends_on:
       - elasticsearch
 

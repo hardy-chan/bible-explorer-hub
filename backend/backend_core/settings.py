@@ -74,7 +74,11 @@ REST_FRAMEWORK = {
 # Elasticsearch connection configuration mapping
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': [{
+            'host': os.environ.get('ELASTICSEARCH_HOST', 'localhost'),
+            'port': int(os.environ.get('ELASTICSEARCH_PORT', 9200)),
+            'scheme': os.environ.get('ELASTICSEARCH_SCHEME', 'http'),
+        }]
     },
 }
 
