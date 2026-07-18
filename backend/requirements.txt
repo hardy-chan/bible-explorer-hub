@@ -1,0 +1,5 @@
+django>=6.0.7
+djangorestframework
+django-cors-headers
+django-elasticsearch-dsl>=8.0.0
+elasticsearch>=8.0.0

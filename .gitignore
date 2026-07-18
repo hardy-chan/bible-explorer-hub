@@ -1,0 +1,17 @@
+# Python environment artifacts
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# Local relational storage database databases
+backend/db.sqlite3
+
+# Node modules presentation assets
+frontend/node_modules/
+frontend/.next/
+
+# Local configuration overrides
+.env
+
+# Secret key file
+SECRET_KEY.txt

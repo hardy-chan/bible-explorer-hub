@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: bible_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+
+  backend:
+    build: ./backend
+    container_name: bible_backend
+    # Automatically triggers migrations, runs ingest script, builds search index, starts server
+    command: >
+      bash -c "python manage.py migrate &&
+               python ingest.py &&
+               python manage.py search_index --rebuild -f &&
+               python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elasticsearch
+
+  frontend:
+    build: ./frontend
+    container_name: bible_frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
