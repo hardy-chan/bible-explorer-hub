@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
@@ -19,7 +17,6 @@ services:
   backend:
     build: ./backend
     container_name: bible_backend
-    # Automatically triggers migrations, runs ingest script, builds search index, starts server
     command: >
       bash -c "python manage.py migrate &&
                python ingest.py &&
@@ -29,11 +26,6 @@ services:
       - ./backend:/app
     ports:
       - "8000:8000"
-    environment:
-      - ELASTICSEARCH_HOST=elasticsearch
-      - ELASTICSEARCH_PORT=9200
-      - ELASTICSEARCH_SCHEME=http
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}  
     depends_on:
       - elasticsearch
 
@@ -43,7 +35,6 @@ services:
     command: npm run dev
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     environment:
