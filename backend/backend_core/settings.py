@@ -74,7 +74,7 @@ REST_FRAMEWORK = {
 # Elasticsearch connection configuration mapping
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://elasticsearch:9200'
+        'hosts': ['http://elasticsearch:9200']
     },
 }
 
