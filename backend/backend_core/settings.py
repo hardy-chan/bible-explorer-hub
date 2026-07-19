@@ -78,7 +78,6 @@ ELASTICSEARCH_DSL = {
     },
 }
 
-
 ROOT_URLCONF = 'backend_core.urls'
 WSGI_APPLICATION = 'backend_core.wsgi.application'
 
